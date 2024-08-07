@@ -1,0 +1,20 @@
+[project]
+name = "employee-server"
+version = "0.0.0"
+description = "Employee registry API server"
+authors = [
+  { name = "Toplica Tanasković", email = "toplicius@gmail.com" },
+]
+dependencies = [
+  "Flask",
+  "flask-restx",
+  "toml",
+]
+requires-python = ">3.8"
+
+[build-system]
+requires = ["flit-core"]
+build-backend = "flit_core.buildapi"
+
+[tool.black]
+line-length = 79
