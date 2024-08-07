@@ -1,5 +1,5 @@
 from flask_restx import Resource, Namespace, fields
-from flask import current_app as app
+from enum import Enum, unique
 
 api = Namespace("types", description="Employee types")
 
@@ -20,6 +20,13 @@ types = api.model(
 )
 
 
+employee_types = [
+    {"id": 1, "name": "Full time"},
+    {"id": 2, "name": "Part time"},
+    {"id": 3, "name": "Contractor"},
+]
+
+
 @api.route("/")
 class Type(Resource):
     @api.doc("get")
@@ -28,5 +35,5 @@ class Type(Resource):
         """
         Returns list of supported employee types.
         """
-        app.logger.warning("FAK!")
-        return [{"id": 1, "name": "Full time"}]
+
+        return employee_types
