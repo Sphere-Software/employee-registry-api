@@ -3,7 +3,7 @@ from flask_restx import Resource, Namespace, fields
 api = Namespace("version", description="Version information")
 
 
-version_info = {"version", "X.X.X"}
+version_info = {"version": "X.X.X"}
 
 
 def get_api():
