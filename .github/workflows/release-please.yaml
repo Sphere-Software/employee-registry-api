@@ -14,28 +14,31 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: googleapis/release-please-action@v4
+        id: release
         with:
           release-type: python
       - uses: actions/checkout@v4
-
+      
       - name: Setting up Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.x"
-
+          python-version: '3.x'
+      
       - name: Install build dependencies
         run: python -m pip install --upgrade pip build
-
+      
       - name: Build release distributions
         run: python -m build
-
-      - name: Upload distributions
+      
+      - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
           name: release-dists
           path: dist/
 
       - name: Upload package(s) to github release
+        if: ${{ steps.release.outputs.release_created }}
         env:
-          GH_TOKEN: ${{ github.token }}
-        run: gh release upload $GITHUB_REF dist/*.whl --clobber
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          gh release upload ${{ steps.release.outputs.tag_name }} dist/*.whl --clobber
