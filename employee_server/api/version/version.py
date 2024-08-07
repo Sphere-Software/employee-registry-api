@@ -7,7 +7,9 @@ version_info = {"version": "X.X.X"}
 
 
 def get_api():
-    """Returns version API."""
+    """
+    Returns version API.
+    """
     return api
 
 
