@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.0](https://github.com/Sphere-Software/employee-registry-api/compare/v0.1.0...v0.2.0) (2024-08-07)
+
+
+### Features
+
+* Added employe types endpoint. ([0591251](https://github.com/Sphere-Software/employee-registry-api/commit/0591251aead5afb5a08d8d3dede2da373ba55bba))
+
 ## 0.1.0 (2024-08-07)
 
 
