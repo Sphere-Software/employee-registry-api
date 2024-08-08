@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.1](https://github.com/Sphere-Software/employee-registry-api/compare/v0.2.0...v0.2.1) (2024-08-08)
+
+
+### Bug Fixes
+
+* **test:** Version test now reads project version from pyproject.toml ([1fc5dce](https://github.com/Sphere-Software/employee-registry-api/commit/1fc5dce87f5c954fc23bca1c7c1c6dbe2d3325e0))
+
 ## [0.2.0](https://github.com/Sphere-Software/employee-registry-api/compare/v0.1.0...v0.2.0) (2024-08-07)
 
 
