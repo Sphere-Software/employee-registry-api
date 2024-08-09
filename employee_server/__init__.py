@@ -18,6 +18,24 @@ def create_app(test_config=None):
         # Store the databae in the instance folder.
         DATABASE=os.path.join(app.instance_path, "employee-server.sqlite"),
     )
+
+    if test_config is None:
+        # Load the instance config, if it exists, when not testing.
+        app.config.from_pyfile("config.py", silent=True)
+    else:
+        # Load the test config if passed in.
+        app.config.update(test_config)
+
+    # Ensure that the instance folder exists.
+    try:
+        os.makedirs(app.instance_path)
+    except OSError:
+        pass
+
+    # Register the database commands.
+    from . import db
+
+    db.init_app(app)
     setup_api(app)
 
     return app

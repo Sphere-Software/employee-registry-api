@@ -2,7 +2,7 @@ from flask_restx import Api
 from importlib import metadata
 
 from .version import version as ns1
-from .types import types as ns2
+from .employee_types import employee_type as ns2
 
 import flask
 
@@ -25,5 +25,5 @@ def setup_api(app: flask.Flask):
 
     ns1.set_version(ver)
     api.add_namespace(ns1.get_api(), "/version")
-    api.add_namespace(ns2.get_api(), "/types")
+    api.add_namespace(ns2.get_api(), "/employee_types")
     api.init_app(app)
