@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.0](https://github.com/Sphere-Software/employee-registry-api/compare/v0.2.1...v0.3.0) (2024-08-09)
+
+
+### Features
+
+* **db:** Added database support. ([ffa2b16](https://github.com/Sphere-Software/employee-registry-api/commit/ffa2b16d5d889cdedad0a0600aedd32b56fa1e96))
+
 ## [0.2.1](https://github.com/Sphere-Software/employee-registry-api/compare/v0.2.0...v0.2.1) (2024-08-08)
 
 
