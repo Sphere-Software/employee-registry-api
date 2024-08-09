@@ -1,7 +1,8 @@
 from flask_restx import Resource, Namespace, fields
-from enum import Enum, unique
 
-api = Namespace("types", description="Employee types")
+from flask import current_app
+
+api = Namespace("employee_types", description="Employee types")
 
 
 def get_api():
@@ -11,8 +12,8 @@ def get_api():
     return api
 
 
-types = api.model(
-    "Types",
+employee_type = api.model(
+    "EmployeeType",
     {
         "id": fields.Integer(required=True, description="Type id"),
         "name": fields.String(required=True, description="Type name"),
@@ -20,20 +21,15 @@ types = api.model(
 )
 
 
-employee_types = [
-    {"id": 1, "name": "Full time"},
-    {"id": 2, "name": "Part time"},
-    {"id": 3, "name": "Contractor"},
-]
-
-
 @api.route("/")
-class Type(Resource):
+class EmployeeType(Resource):
     @api.doc("get")
-    @api.marshal_list_with(types)
+    @api.marshal_list_with(employee_type)
     def get(self):
         """
         Returns list of supported employee types.
         """
-
+        db = current_app.__getattr__("get_db")()
+        employee_types = db.execute(
+            "SELECT id, name FROM employee_types").fetchall()
         return employee_types
