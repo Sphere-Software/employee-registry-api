@@ -23,7 +23,7 @@ employee_type = api.model(
 
 @api.route("/")
 class EmployeeType(Resource):
-    @api.doc("get")
+    @api.doc("get_employee_types")
     @api.marshal_list_with(employee_type)
     def get(self):
         """
