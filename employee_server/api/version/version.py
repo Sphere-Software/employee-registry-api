@@ -32,7 +32,7 @@ version = api.model(
 
 @api.route("/")
 class Version(Resource):
-    @api.doc("get")
+    @api.doc("get_version")
     @api.marshal_with(version)
     def get(self):
         """
