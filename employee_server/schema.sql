@@ -1,8 +1,14 @@
 -- Initialise the database.
 -- Drop any existing data and create empty tables.
 DROP TABLE IF EXISTS employee_types;
+DROP TABLE IF EXISTS teams;
 
 CREATE TABLE employee_types (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name TEXT NOT NULL
+);
+
+CREATE TABLE teams (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   name TEXT NOT NULL
 );
