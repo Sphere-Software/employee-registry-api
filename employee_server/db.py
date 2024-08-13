@@ -1,8 +1,7 @@
 import sqlite3
 
 import click
-from flask import current_app
-from flask import g
+from flask import current_app, g
 
 
 def get_db():
@@ -56,4 +55,3 @@ def init_app(app):
     """
     app.teardown_appcontext(close_db)
     app.cli.add_command(init_db_command)
-    app.__setattr__("get_db", get_db)
