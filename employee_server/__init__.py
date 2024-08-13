@@ -12,11 +12,13 @@ def create_app(test_config=None):
     :param test_config: Configuration for testing.
     """
     app = Flask(__name__, instance_relative_config=True)
+    database_uri = os.path.join(app.instance_path, "employee-server.sqlite")
+    app.logger.debug(f"Database uri: {database_uri}")
     app.config.from_mapping(
         # A default secret key that should be overridden by instance config.
         SECRET_KEY="dev",
         # Store the databae in the instance folder.
-        DATABASE=os.path.join(app.instance_path, "employee-server.sqlite"),
+        SQLALCHEMY_DATABASE_URI=f"sqlite://{database_uri}",
     )
 
     if test_config is None:
