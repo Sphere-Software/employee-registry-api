@@ -1,6 +1,6 @@
-from flask_restx import Resource, Namespace, fields
+from flask_restx import Namespace, Resource, fields
 
-from flask import current_app
+from employee_server.db import get_db
 
 api = Namespace("employee_types", description="Employee types")
 
@@ -29,7 +29,8 @@ class EmployeeType(Resource):
         """
         Returns list of supported employee types.
         """
-        db = current_app.__getattr__("get_db")()
+        db = get_db()
         employee_types = db.execute(
-            "SELECT id, name FROM employee_types").fetchall()
+            "SELECT id, name FROM employee_types"
+        ).fetchall()
         return employee_types

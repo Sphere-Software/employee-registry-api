@@ -4,8 +4,7 @@ import tempfile
 import pytest
 
 from employee_server import create_app
-from employee_server.db import get_db
-from employee_server.db import init_db
+from employee_server.db import get_db, init_db
 
 with open(os.path.join(os.path.dirname(__file__), "data.sql"), "rb") as f:
     _data_sql = f.read().decode("utf8")
