@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.4.0](https://github.com/Sphere-Software/employee-registry-api/compare/v0.3.0...v0.4.0) (2024-08-13)
+
+
+### Features
+
+* Added teams endpoint. ([73167e5](https://github.com/Sphere-Software/employee-registry-api/commit/73167e521459e7e7d6e3cdcf221e80e923203018))
+
+
+### Bug Fixes
+
+* **api:** Fixed a lot of warnings and possible issues accessing database. ([32d0b23](https://github.com/Sphere-Software/employee-registry-api/commit/32d0b231e8151e69dc96826236a687724c5d5847))
+
 ## [0.3.0](https://github.com/Sphere-Software/employee-registry-api/compare/v0.2.1...v0.3.0) (2024-08-09)
 
 
