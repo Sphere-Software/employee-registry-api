@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.0](https://github.com/Sphere-Software/employee-registry-api/compare/v0.4.0...v0.5.0) (2024-08-14)
+
+
+### Features
+
+* **db:** Migrated to SQLAlchemy. ([62695f0](https://github.com/Sphere-Software/employee-registry-api/commit/62695f0bac45d3e81969feeb5b03fb0a0291d121))
+
 ## [0.4.0](https://github.com/Sphere-Software/employee-registry-api/compare/v0.3.0...v0.4.0) (2024-08-13)
 
 
