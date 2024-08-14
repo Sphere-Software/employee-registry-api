@@ -3,6 +3,7 @@ import os
 from flask import Flask
 
 from .api import setup_api
+from .models.employee_type import EmployeeType
 
 
 def create_app(test_config=None):
@@ -16,7 +17,7 @@ def create_app(test_config=None):
         # A default secret key that should be overridden by instance config.
         SECRET_KEY="dev",
         # Store the databae in the instance folder.
-        DATABASE=os.path.join(app.instance_path, "employee-server.sqlite"),
+        SQLALCHEMY_DATABASE_URI="sqlite://",
     )
 
     if test_config is None:
@@ -26,6 +27,7 @@ def create_app(test_config=None):
         # Load the test config if passed in.
         app.config.update(test_config)
 
+    # TODO: Do we really need this?
     # Ensure that the instance folder exists.
     try:
         os.makedirs(app.instance_path)
@@ -37,5 +39,15 @@ def create_app(test_config=None):
 
     db.init_app(app)
     setup_api(app)
+
+    with app.app_context():
+        data = [
+            EmployeeType(1, "Full time"),
+            EmployeeType(2, "Part time"),
+            EmployeeType(3, "Contractor"),
+        ]
+        session = db.get_db().session
+        session.add_all(data)
+        session.commit()
 
     return app

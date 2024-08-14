@@ -1,51 +1,32 @@
-import sqlite3
+import logging
 
-import click
-from flask import current_app, g
+from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.orm import DeclarativeBase
+
+logging.basicConfig()
+logging.getLogger("sqlalchemy.engine").setLevel(logging.DEBUG)
+
+
+class Base(DeclarativeBase):
+    pass
+
+
+db = SQLAlchemy(model_class=Base)
 
 
 def get_db():
     """
-    Connect to the application's configured database. The connection is unique
-    for each request and will be reused if called again.
+    Return SLQAlcmemy object.
     """
-    if "db" not in g:
-        g.db = sqlite3.connect(
-            current_app.config["DATABASE"],
-            detect_types=sqlite3.PARSE_DECLTYPES,
-        )
-        g.db.row_factory = sqlite3.Row
-
-    return g.db
+    return db
 
 
-def close_db(e=None):
-    """
-    If this request is connected to the database, close the connection.
-    """
-    db = g.pop("db", None)
-
-    if db is not None:
-        db.close()
-
-
-def init_db():
+def init_db(app):
     """
     Clear existing data and create new tables.
     """
-    db = get_db()
-
-    with current_app.open_resource("schema.sql") as f:
-        db.executescript(f.read().decode("utf8"))
-
-
-@click.command("init-db")
-def init_db_command():
-    """
-    Clear existing data and create new tables.
-    """
-    init_db()
-    click.echo("Initialised the database")
+    with app.app_context():
+        db.create_all()
 
 
 def init_app(app):
@@ -53,5 +34,6 @@ def init_app(app):
     Register database functions with Flask app. This called by the application
     factory.
     """
-    app.teardown_appcontext(close_db)
-    app.cli.add_command(init_db_command)
+    db.init_app(app)
+    init_db(app)
+    app.logger.info("Application initialised.")

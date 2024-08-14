@@ -7,3 +7,5 @@ dist
 htmlcov
 .pytest_cache
 instance
+test_results.xml
+test-results.xml
