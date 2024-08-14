@@ -1,6 +1,30 @@
 import json
 
+import pytest
 from flask_restx._http import HTTPStatus
+
+from employee_server import create_app
+from employee_server.db import get_db, init_db
+from employee_server.models.team import Team
+
+
+@pytest.fixture
+def app():
+    """
+    Create and configure a new app instance for each test.
+    """
+    # Create a temporary file to isolate the database for each test.
+    app = create_app({"TESTING": True, "SQLALCHEMY_DATABASE_URI": "sqlite://"})
+
+    # Create the database and load test data
+    with app.app_context():
+        init_db(app)
+        teams = [Team("Foo team"), Team("Bar team")]
+        session = get_db().session
+        session.add_all(teams)
+        session.commit()
+
+    yield app
 
 
 def test_get_all_teams(client):

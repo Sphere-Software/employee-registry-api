@@ -1,9 +1,10 @@
-import sqlite3
-
-from employee_server.db import get_db
 from flask import current_app
 from flask_restx import Namespace, Resource, fields
 from flask_restx._http import HTTPStatus
+from sqlalchemy.exc import IntegrityError
+
+from employee_server.db import get_db
+from employee_server.models.team import Team as TeamModel
 
 api = Namespace("teams", description="Teams")
 
@@ -32,8 +33,7 @@ class Teams(Resource):
         """
         Returns list of teams.
         """
-        db = get_db()
-        teams = db.execute("SELECT id, name FROM teams").fetchall()
+        teams = TeamModel.query.all()
         return teams
 
     @api.doc("create_team")
@@ -47,18 +47,19 @@ class Teams(Resource):
         """
         Adds new team.
         """
-        db = get_db()
+        session = get_db().session
         name = api.payload["name"]
         try:
-            current_app.logger.debug(f"{api.payload}")
-            result = db.execute("INSERT INTO teams (name) values (?)", (name,))
-            db.commit()
-            return {"id": result.lastrowid, "name": name}, 201
-        except sqlite3.IntegrityError:
+            team = TeamModel(name)
+            session.add(team)
+            session.commit()
+            return {"id": team.id, "name": name}, 201
+        except IntegrityError:
             current_app.logger.error(
-                f"The team with name '{name}' already exists."
+                f"The team with name '{
+                    name}' already exists."
             )
-            db.rollback()
+            session.rollback()
             api.abort(
                 HTTPStatus.CONFLICT,
                 f"The team with name '{name}' already exists",
@@ -78,10 +79,8 @@ class Team(Resource):
         Returns team with gith given id.
         :param int team_id: An id if the team.
         """
-        db = get_db()
-        team = db.execute(
-            "SELECT id, name FROM teams WHERE id = ?", (team_id,)
-        ).fetchone()
+        team = get_db().session.get(TeamModel, team_id)
         if team is not None:
             return team
+
         api.abort(HTTPStatus.NOT_FOUND, "The team does not exist.")
